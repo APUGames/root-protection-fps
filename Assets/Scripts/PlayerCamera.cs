@@ -15,8 +15,6 @@ public class PlayerCamera : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
     }
 
     // Update is called once per frame
@@ -25,6 +23,8 @@ public class PlayerCamera : MonoBehaviour
         // Get mouse input
         float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * mouseSensitivityX;
         float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * mouseSensitivityY;
+
+        // GameObject.Find("Cursor").transform.position = new Vector3(mouseX, mouseY, 0f);
 
         rotationY += mouseX;
         rotationX -= mouseY;

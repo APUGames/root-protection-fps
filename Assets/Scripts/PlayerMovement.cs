@@ -1,3 +1,4 @@
+// Notes from Dave https://www.youtube.com/watch?v=f473C43s8nE
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,14 +8,21 @@ public class PlayerMovement : MonoBehaviour
     [Header("Movement")]
     public float moveSpeed;
 
+    public float groundDrag;
+
+    [Header("Ground Check")]
+    public float playerHeight;
+    public LayerMask whatIsGround;
+    bool grounded;
+
     public Transform playerOrientation;
 
-    float horizontalInput;
-    float verticalInput;
+    private float horizontalInput;
+    private float verticalInput;
 
-    Vector3 moveDirection;
+    private Vector3 moveDirection;
 
-    Rigidbody playerRigidbody;
+    private Rigidbody playerRigidbody;
 
     // Start is called before the first frame update
     void Start()
@@ -26,7 +34,20 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Ground check
+        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
+
         PlayerInput();
+
+        // Handle drag after getting player input
+        if (grounded)
+        {
+            playerRigidbody.drag = groundDrag;
+        }
+        else
+        {
+            playerRigidbody.drag = 0;
+        }
     }
 
     private void FixedUpdate()

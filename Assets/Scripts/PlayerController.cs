@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     public GameObject bulletPrefab;
     public float bulletSpeed = 10f;
+    public float bulletDistance = 30f;
 
     // Start is called before the first frame update
     void Start()
@@ -19,9 +20,8 @@ public class PlayerController : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            // RaycastHit hit;
 
-            Vector3 shootingDirection = ray.GetPoint(20f) - transform.position;
+            Vector3 shootingDirection = ray.GetPoint(bulletDistance) - transform.position;
             shootingDirection.Normalize();
 
             GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
